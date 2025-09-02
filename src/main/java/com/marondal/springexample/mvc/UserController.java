@@ -14,18 +14,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ResponseBody
+//    @ResponseBody
 //    @RequestMapping(value="/add", method=RequestMethod.POST)
     @PostMapping("/add")
     public String addUser(
             @RequestParam("name") String name
             , @RequestParam("birthday") String birthday
             , @RequestParam("email") String email
-            , @RequestParam(value="introduce", required=false) String introduce) {
+            , @RequestParam(value="introduce", required=false) String introduce
+            , Model model) {
 
-        int count = userService.createUser(name, birthday, email, introduce);
+        User user = new User();
+        user.setName(name);
+        user.setYyyymmdd(birthday);
+        user.setEmail(email);
+        user.setIntroduce(introduce);
 
-        return "실행 결과 : " + count;
+        int count = userService.createUserByObject(user);
+
+//        int count = userService.createUser(name, birthday, email, introduce);
+        model.addAttribute("result", user);
+//        return "실행 결과 : " + count;
+        return "mvc/userInfo";
     }
 
     @GetMapping("/form")

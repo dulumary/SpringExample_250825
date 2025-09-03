@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf 변수와 조건문</title>
+</head>
+<body>
+    <h2>Thymeleaf 변수와 조건문</h2>
+
+    <h3>1. 변수</h3>
+    <div th:with="number = 100">
+        <h4 th:text="${number}"></h4>
+    </div>
+
+    <!-- 변수가 선언된 태그 범위 안에서만 활용가능 -->
+    <h4 th:text="${number}"></h4>
+
+    <h3>2. 태그 없이 thymeleaf 활용</h3>
+    <!-- block 태그는 최종 결과 html에 포함되지 않는다
+    랜더링 되지 않는다 -->
+    <th:block th:with="number1 = 200, number2 = 300">
+        <h4 th:text="${number1}"></h4>
+        <h4 th:text="${number1 + number2}"></h4>
+        <!-- 결과 : 500 -->
+        <h4>결과 : <span th:text="${number1 + number2}"></span> </h4>
+        <h4 th:text="'결과 : ' + ${number1 + number2}"></h4>
+        <h4 th:text="|결과 : ${number1 + number2}|"></h4>
+    </th:block>
+
+
+    <h3>3. 태그 그대로 나태내기</h3>
+    <div th:text="'<b>진한글씨</b>'"></div>
+    <div th:utext="'<b>진한글씨</b>'"></div>
+
+    <h3>4. 조건문</h3>
+    <th:block th:with="age = 22">
+        <!-- th:if 에 true 값인 경우에 해당 태그가 포함(랜더링) 된다. -->
+        <!-- 15살 보다 많으면 태그 보여주기 -->
+        <h4 th:if="${age >= 15}">15살 이상입니다.</h4>
+
+        <h4 th:if="${age >= 20}">성인 입니다</h4>
+        <!-- th:unless에 false 인경우 해당 태그가 포함(랜더링) 된다. -->
+        <h4 th:unless="${age >= 20}">미성년 입니다</h4>
+    </th:block>
+
+    <h3>5. switch </h3>
+
+    <th:block th:with="season = '가을'">
+        <!-- 봄일때 따듯하다, 여름일때 덥다, 가을일때 시원하다, 겨울일때 춥다 -->
+        <div th:switch="${season}">
+            <h4 th:case="봄">따뜻하다</h4>
+            <h4 th:case="여름">덥다</h4>
+            <h4 th:case="가을">시원하다</h4>
+            <h4 th:case="겨울">춥다</h4>
+            <h4 th:case="*">계절이 아닙니다</h4>
+        </div>
+    </th:block>
+
+
+
+
+</body>
+</html>

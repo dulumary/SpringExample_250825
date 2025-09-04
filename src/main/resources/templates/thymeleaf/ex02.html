@@ -28,16 +28,12 @@
 
         </thead>
         <tbody>
-            <tr>
-                <td>유재석</td>
-                <td>30</td>
-                <td>진행</td>
+            <tr th:each="user:${userList}">
+                <td th:text="${user.name}">유재석</td>
+                <td th:text="${user.age}">30</td>
+                <td th:text="${user.hobby}">진행</td>
             </tr>
-            <tr>
-                <td>조세호</td>
-                <td>28</td>
-                <td>웃기</td>
-            </tr>
+
         </tbody>
     </table>
 

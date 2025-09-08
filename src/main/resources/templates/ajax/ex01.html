@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX 테스트</title>
+</head>
+<body>
+    <h2>AJAX 테스트</h2>
+
+<!-- 입력된 이름과 생년월일을 /person API를 통해서 이름과 나이를 페이지 이동 없이 표시한다.  -->
+    <label>이름 : </label> <input type="text" id="nameInput">
+    <label>생년월일 : </label> <input type="text" id="birthdayInput">
+    <button type="button" id="inputBtn">입력</button>
+
+    <h4>이름 : <span id="nameSpan"></span></h4>
+    <h4>나이 : <span id="ageSpan"></span></h4>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $("#inputBtn").on("click", function() {
+            let name = $("#nameInput").val();
+            let birthday = $("#birthdayInput").val();
+
+            if(name == "") {
+                alert("이름을 입력하세요");
+                return ;
+            }
+
+            if(birthday == "") {
+                alert("생년월일을 입력하세요");
+                return ;
+            }
+
+            $.ajax({
+                type:"get"
+                , url:"/ajax/person"
+                , data:{"name":name, "birthday":birthday}
+                , success:function(response) {
+                    // 응답이 성공적으로 전달되었을때 실행할 기능
+                    // json 문자열
+                    // {"name":"김인규", "age":31}
+                    // Jquery ajax 함수가 json문자열의 경우
+                    // JavaScript 객체로 변환해서 전달해준다.
+                    // console.log(response["name"]);
+                    // console.log(response.age);
+
+                    $("#nameSpan").text(response.name);
+                    $("#ageSpan").text(response.age);
+                }
+                , error:function() {
+                    // 수행과정에서 에러가 발생되었을때 실행할 기능
+                    alert("에러!!");
+                }
+            });
+
+        });
+
+    </script>
+</body>
+</html>
